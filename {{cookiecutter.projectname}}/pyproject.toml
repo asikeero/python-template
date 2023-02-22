@@ -2,4 +2,4 @@
 tespaths = 'tests'
 
 [mypy]
-python_version = {{cookiecutter.python-version}}
+python_version = {{cookiecutter.pyversion}}
