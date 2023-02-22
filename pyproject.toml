@@ -1,5 +1,0 @@
-[tool.pytest.ini_options]
-tespaths = 'tests'
-
-[mypy]
-python_version = {{cookiecutter.python-version}}
