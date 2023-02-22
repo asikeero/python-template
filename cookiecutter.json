@@ -1,4 +1,4 @@
 {
     "projectname": "my-project",
-    "python-version": "3.9"
+    "pyversion": "3.9"
 }
