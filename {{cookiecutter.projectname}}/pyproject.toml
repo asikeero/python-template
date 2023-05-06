@@ -18,3 +18,8 @@ black = '*'
 ruff = '*'
 vulture = '*'
 mypy = '*'
+
+[tool.ruff]
+select = [
+    'E', 'F', 'I'
+]
