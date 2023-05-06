@@ -1,6 +1,8 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 # If any command fails, exit immediately with that command's exit status
 set -eo pipefail
 
+echo '**** running pre-commit hook ****\n'
 make lint
+echo '**** pre-commit successful ****\n'

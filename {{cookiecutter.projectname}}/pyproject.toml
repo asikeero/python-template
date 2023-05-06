@@ -1,5 +1,20 @@
 [tool.pytest.ini_options]
-tespaths = 'tests'
+testpaths = 'tests'
 
 [mypy]
-python_version = {{cookiecutter.pyversion}}
+python_version = '{{ cookiecutter.pyversion }}'
+
+[tool.poetry]
+name = '{{ cookiecutter.projectname }}'
+version = '0.1.0'
+description = ''
+authors = []
+
+[tool.poetry.dependencies]
+python = '^{{ cookiecutter.pyversion }}'
+
+[tool.poetry.group.dev.dependencies]
+black = '*'
+ruff = '*'
+vulture = '*'
+mypy = '*'

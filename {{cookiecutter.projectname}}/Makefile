@@ -1,30 +1,37 @@
-PROJECT = piikkibot
-VENV = venv
-PYTHON = $(VENV)/bin/python3
-PIP = $(VENV)/bin/pip
+PROJECT = {{ cookiecutter.projectname }}
+RUFFFLAGS = ""
+PYTESTFLAGS = ""
 
-run:
-	$(PYTHON) -m $(PROJECT).main
 
-install: requirements.txt requirements-dev.txt
-	python3 -m venv $(VENV)
-	$(PIP) install --upgrade pip
-	$(PIP) install -r requirements.txt 
-	$(PIP) install -r requirements-dev.txt
+all: .built
+
+.built: pyproject.toml
+	poetry install
 	$(shell ln -sf ../../hooks/pre-commit .git/hooks/pre-commit)
 	$(shell chmod +x hooks/pre-commit)
+	touch .built
+
+lint: .built
+	@echo "**** black ****"
+	poetry run black --check $(PROJECT) tests
+	@echo "**** vulture ****"
+	poetry run vulture $(PROJECT)
+	@echo "**** mypy ****"
+	poetry run mypy -p $(PROJECT)
+	@echo "**** ruff ****"
+	poetry run ruff check $(RUFFFLAGS) $(PACKAGE) tests
+
+format: .built
+	@echo "**** black ****"
+	poetry run black $(PROJECT) tests
+	@echo "**** ruff ****"
+	poetry run ruff check --fix $(PACKAGE) tests
+
+test: .built
+	poetry run pytest $(PYTESTFLAGS)
 
 
-lint:
-	$(PYTHON) -m black .
-	$(PYTHON) -m isort .
-	$(PYTHON) -m mypy .
-
-test:
-	$(PYTHON) -m pytest
 
 clean:
-	rm -rf **/__pycache__
-	rm -rf **/.pytest_cache
-	rm -rf **/.mypy_cache
-	rm -rf $(VENV)
+	poetry env remove --all
+	git clean -Xdf
