@@ -1,6 +1,6 @@
 PROJECT = {{ cookiecutter.projectname }}
-RUFFFLAGS = ""
-PYTESTFLAGS = ""
+RUFFFLAGS =
+PYTESTFLAGS =
 
 
 all: .built
@@ -29,7 +29,6 @@ format: .built
 
 test: .built
 	poetry run pytest $(PYTESTFLAGS)
-
 
 
 clean:
